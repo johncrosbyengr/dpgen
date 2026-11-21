@@ -4,8 +4,6 @@ DP-GEN is a Python scientific computing package for generating deep learning-bas
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
-**Lab fork:** this repository is a lab fork; read `LAB.md` first. Never put anything that identifies a real cluster (hostnames, IP addresses, user names, scheduler accounts, node names, cluster paths) in a tracked file or a commit message. Work on the `lab` branch, never on `master`.
-
 ## Working Effectively
 
 ### Bootstrap and Install

@@ -2,10 +2,10 @@
 # Lab fork guard: exit 1 if the given text file contains a string that identifies one of the lab's clusters.
 # The strings are kept outside the repository, one per line (matched case-insensitively as whole words, # comments):
 #   $DPGEN_LAB_PATTERNS, default ~/.config/dpgen-lab/forbidden-patterns
-# Used by the pre-commit and commit-msg hooks (see LAB.md).
+# Used by the pre-commit and commit-msg hooks.
 pat=${DPGEN_LAB_PATTERNS:-$HOME/.config/dpgen-lab/forbidden-patterns}
 if [ ! -s "$pat" ]; then
-    echo "lab guard: no pattern file at $pat; create it before committing (see LAB.md)." >&2
+    echo "lab guard: no pattern file at $pat; create it before committing (one string per line)." >&2
     exit 1
 fi
 list=$(mktemp) || exit 1

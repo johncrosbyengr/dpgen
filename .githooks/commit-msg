@@ -1,3 +1,3 @@
 #!/bin/sh
-# Lab fork guard: check the commit message (see LAB.md).
+# Lab fork guard: check the commit message.
 exec "$(dirname "$0")/site-check.sh" "$1" "commit message"

@@ -1,6 +1,24 @@
 #!/bin/sh
-# Lab fork guard: check the lines this commit adds, and the staged file names (see LAB.md).
+# Lab fork guard. Only general source code is committed: refuse new or changed documentation files (except while
+# merging upstream), and refuse added lines, file names or messages that identify a lab cluster.
 dir=$(dirname "$0")
+if [ ! -f "$(git rev-parse --git-dir)/MERGE_HEAD" ]; then
+    docs=""
+    for f in $(git diff --cached --name-only --diff-filter=ACMR | grep -iE '\.(md|markdown|rst)$'); do
+        staged=$(git rev-parse -q --verify ":$f")
+        same=""
+        for ref in upstream/master origin/master master; do      # restoring upstream's own version is allowed
+            [ "$(git rev-parse -q --verify "$ref:$f" 2>/dev/null)" = "$staged" ] && same=1 && break
+        done
+        [ -n "$same" ] || docs="$docs$f
+"
+    done
+    if [ -n "$docs" ]; then
+        echo "lab guard: documentation files are kept untracked in this fork:" >&2
+        echo "$docs" >&2
+        exit 1
+    fi
+fi
 added=$(mktemp) || exit 1
 trap 'rm -f "$added"' EXIT
 git diff --cached --no-color -U0 --no-ext-diff | grep '^+' | grep -v '^+++ ' > "$added"

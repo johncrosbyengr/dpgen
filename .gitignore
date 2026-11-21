@@ -45,10 +45,13 @@ doc/api/
 dpgen_venv/
 test_env/
 
-# Lab fork: cluster details live only in untracked files (see LAB.md). New example machine files with placeholder
-# values can still be added with `git add -f`.
+# Lab fork: only general source code is committed. Cluster details, run records and documentation stay untracked.
+# Example machine files with placeholder values can still be added with `git add -f`.
 machine*.json
 *.local.json
 lab-config/
 record.dpgen
 dpdispatcher.log
+*.md
+*.markdown
+*.rst
