@@ -1,0 +1,8 @@
+#!/bin/sh
+# Lab fork guard: check the lines this commit adds, and the staged file names (see LAB.md).
+dir=$(dirname "$0")
+added=$(mktemp) || exit 1
+trap 'rm -f "$added"' EXIT
+git diff --cached --no-color -U0 --no-ext-diff | grep '^+' | grep -v '^+++ ' > "$added"
+git diff --cached --name-only >> "$added"
+"$dir/site-check.sh" "$added" "staged changes"
